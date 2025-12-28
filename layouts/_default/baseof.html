@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta name="author" content="{{ .Site.Params.author }}">
+    <meta name="generator" content="Hugo {{ hugo.Version }}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta property="og:site_name" content="{{ .Site.Title }}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="{{ .Site.BaseURL }}images/profile.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+    <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}images/profile.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ .Permalink }}">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="{{ .Site.BaseURL }}favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ .Site.BaseURL }}apple-touch-icon.png">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ .Site.BaseURL }}site.webmanifest">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+    
+    <!-- RSS Feed -->
+    {{ with .OutputFormats.Get "RSS" }}
+    <link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" href="{{ .Permalink }}">
+    {{ end }}
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "{{ .Site.Params.author }}",
+        "url": "{{ .Site.BaseURL }}",
+        "image": "{{ .Site.BaseURL }}images/profile.jpg",
+        "sameAs": [
+            "https://github.com/{{ .Site.Params.github }}",
+            "https://youtube.com/{{ .Site.Params.youtube }}"
+        ],
+        "jobTitle": "Computer Science Student",
+        "worksFor": {
+            "@type": "EducationalOrganization",
+            "name": "Sapientia EMTE"
+        }
+    }
+    </script>
+    
+    <!-- Styles -->
+    <style>
+        {{- partial "css/main.css" . | safeCSS -}}
+    </style>
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner">
+        <nav aria-label="Main navigation" class="main-nav">
+            <ul>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#interests">Interests</a></li>
+            </ul>
+            <button type="button" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+                <span class="theme-icon" aria-hidden="true">◐</span>
+            </button>
+        </nav>
+    </header>
+    
+    <main id="main-content" itemprop="mainEntity">
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    <hr>
+    
+    <footer role="contentinfo">
+        <p class="h-card vcard">
+            © <time datetime="{{ now.Format "2006" }}">{{ now.Format "2006" }}</time>
+            <a class="p-name fn u-url url" href="{{ .Site.BaseURL }}" rel="author me" itemprop="author">{{ .Site.Params.author }}</a>
+        </p>
+        <p>
+            <small>Built with <a href="https://gohugo.io/" rel="noopener">Hugo</a></small>
+        </p>
+    </footer>
+    
+    <script>
+        // Theme Toggle Script
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const THEMES = ['auto', 'light', 'dark'];
+            
+            function getThemePreference() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored && THEMES.includes(stored)) {
+                    return stored;
+                }
+                return 'auto';
+            }
+            
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem(STORAGE_KEY, theme);
+                updateToggleLabel(theme);
+            }
+            
+            function updateToggleLabel(theme) {
+                const btn = document.getElementById('theme-toggle');
+                const icon = btn.querySelector('.theme-icon');
+                const labels = { auto: '◐', light: '☀', dark: '☾' };
+                const ariaLabels = { 
+                    auto: 'Current: Auto theme. Click to switch to light.', 
+                    light: 'Current: Light theme. Click to switch to dark.', 
+                    dark: 'Current: Dark theme. Click to switch to auto.' 
+                };
+                icon.textContent = labels[theme];
+                btn.setAttribute('aria-label', ariaLabels[theme]);
+            }
+            
+            function cycleTheme() {
+                const current = getThemePreference();
+                const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
+                setTheme(next);
+            }
+            
+            // Initialize
+            document.addEventListener('DOMContentLoaded', function() {
+                setTheme(getThemePreference());
+                document.getElementById('theme-toggle').addEventListener('click', cycleTheme);
+            });
+            
+            // Set initial theme immediately to prevent flash
+            setTheme(getThemePreference());
+        })();
+    </script>
+</body>
+</html>

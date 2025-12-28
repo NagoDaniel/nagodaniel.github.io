@@ -1,0 +1,12 @@
+{{ define "main" }}
+<article itemscope itemtype="https://schema.org/WebPage">
+    <header>
+        <h1 itemprop="name">{{ .Title }}</h1>
+        {{ with .Description }}<p itemprop="description">{{ . }}</p>{{ end }}
+    </header>
+    <hr>
+    <div itemprop="mainContentOfPage">
+        {{ .Content }}
+    </div>
+</article>
+{{ end }}

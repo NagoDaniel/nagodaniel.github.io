@@ -1,0 +1,24 @@
+baseURL = "https://nagodaniel.github.io/"
+languageCode = "en-US"
+title = "Nágó Dániel"
+copyright = "© 2025 Nágó Dániel"
+
+[params]
+  description = "Personal website of Nágó Dániel - Computer Science student, developer, and creator."
+  author = "Nágó Dániel"
+  email = "nagodaniel2@gmail.com"
+  github = "nagodaniel"
+  youtube = "@NagoDaniel"
+  profileImage = "/images/profile.jpg"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5

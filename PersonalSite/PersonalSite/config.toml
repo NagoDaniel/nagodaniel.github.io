@@ -1,0 +1,27 @@
+base_url = "https://ae7tb99.com"
+title = "AE7TB99"
+description = "Personal site."
+default_language = "en"
+compile_sass = true
+output_dir = "public"
+minify_html = false
+generate_feeds = false
+author = "AE7TB99"
+build_search_index = false
+generate_sitemap = true
+generate_robots_txt = false
+
+[markdown]
+highlight_code = true
+render_emoji = false
+external_links_target_blank = false
+external_links_no_follow = false
+external_links_no_referrer = false
+smart_punctuation = true
+definition_list = false
+lazy_async_image = false
+bottom_footnotes = false
+insert_anchor_links = "none"
+
+[extra]
+nav = [{ path = "" }, { path = "/about" }]

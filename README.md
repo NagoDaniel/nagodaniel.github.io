@@ -1,2 +1,4 @@
-# nagodaniel.github.io
-Nágó Dániel's personal website.
+# Nágó Dániel - Personal Website
+
+A personal website built with [Hugo](https://gohugo.io/).
+

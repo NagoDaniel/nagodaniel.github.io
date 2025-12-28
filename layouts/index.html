@@ -1,0 +1,170 @@
+{{ define "main" }}
+<article class="h-card vcard" itemscope itemtype="https://schema.org/Person">
+    <!-- Profile Section -->
+    <header class="profile-header">
+        <figure class="profile-image">
+            <img 
+                src="{{ .Site.BaseURL }}images/profile.jpg" 
+                alt="Profile photo of {{ .Site.Params.author }}"
+                class="u-photo photo"
+                itemprop="image"
+                loading="eager"
+            >
+        </figure>
+        
+        <h1 class="p-name fn" itemprop="name">{{ .Site.Params.author }}</h1>
+        
+        <p class="p-note tagline" itemprop="description">Computer Science Student &amp; Developer</p>
+        
+        <!-- Social Links -->
+        <nav aria-label="Social links" class="social-links">
+            <ul>
+                <li>
+                    <a href="https://github.com/{{ .Site.Params.github }}" 
+                       rel="me noopener" 
+                       target="_blank"
+                       class="u-url"
+                       itemprop="sameAs"
+                       aria-label="GitHub profile">
+                        <span aria-hidden="true">GitHub</span>
+                        <span class="sr-only">GitHub profile (opens in new tab)</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:{{ .Site.Params.email }}" 
+                       rel="me"
+                       class="u-email email"
+                       itemprop="email"
+                       aria-label="Email">
+                        <span aria-hidden="true">Email</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://youtube.com/{{ .Site.Params.youtube }}" 
+                       rel="me noopener" 
+                       target="_blank"
+                       class="u-url"
+                       itemprop="sameAs"
+                       aria-label="YouTube channel">
+                        <span aria-hidden="true">YouTube</span>
+                        <span class="sr-only">YouTube channel (opens in new tab)</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <hr>
+
+    <!-- Education Section -->
+    <section id="education" aria-labelledby="education-heading">
+        <h2 id="education-heading">Education</h2>
+        <div class="education-list" itemprop="alumniOf" itemscope itemtype="https://schema.org/EducationalOrganization">
+            <article class="education-item">
+                <h3 itemprop="name">Sapientia EMTE</h3>
+                <p class="degree">Informatics (BA/BSc/BProf)</p>
+                <p class="dates"><time datetime="2023-09">September 2023</time> – <span>Present</span></p>
+            </article>
+        </div>
+        <div class="education-list">
+            <article class="education-item">
+                <h3>Bolyai Farkas Theoretical High School</h3>
+                <p class="degree">High School Diploma</p>
+                <p class="dates"><time datetime="2019-09">September 2019</time> – <time datetime="2023-06">June 2023</time></p>
+            </article>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Projects Section -->
+    <section id="projects" aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects &amp; Experience</h2>
+        
+        <div class="projects-list"> 
+            <article class="project-item" itemscope itemtype="https://schema.org/VideoGame">
+                <h3 itemprop="name">The Final Shift</h3>
+                <p class="project-date"><time datetime="2025">2025</time></p>
+                <p itemprop="description">A video game developed in Godot Engine, available on Steam.</p>
+                <p><a href="https://store.steampowered.com/app/4043920/The_Final_Shift/" rel="noopener" target="_blank" itemprop="url">View on Steam (coming soon)</a></p>
+            </article>
+
+            <article class="project-item" itemscope itemtype="https://schema.org/SoftwareApplication">
+                <h3 itemprop="name">EduMillionaire - Gamified Examination Platform</h3>
+                <p class="project-date"><time datetime="2024">2024</time> – <time datetime="2025">2025</time></p>
+                <p itemprop="description">A MERN stack-based platform that gamifies examinations. The system enables real-time multiplayer examination, saving and visualising scores. Designed for university research to analyze the impact of gamification on student performance and stress levels.</p>
+                <p><a href="https://eduMillionaire.ms.sapientia.ro" rel="noopener" target="_blank" itemprop="url">eduMillionaire.ms.sapientia.ro</a></p>
+            </article>
+
+            <article class="project-item">
+                <h3>React Native Internship at 3SS</h3>
+                <p class="project-date"><time datetime="2024">2024</time></p>
+                <p>Completed a React Native internship where I gained valuable experience in teamwork and technical skills in mobile development.</p>
+            </article>
+
+            <article class="project-item" itemscope itemtype="https://schema.org/WebSite">
+                <h3 itemprop="name">YouTube Channel</h3>
+                <p class="project-date"><time datetime="2023-04">April 2023</time> – Present</p>
+                <p itemprop="description">I post videos about my interests, climbing, tutorials and more.</p>
+                <p><a href="https://youtube.com/{{ .Site.Params.youtube }}" rel="me noopener" target="_blank" itemprop="url">youtube.com/{{ .Site.Params.youtube }}</a></p>
+            </article>
+
+            <article class="project-item" itemscope itemtype="https://schema.org/WebApplication">
+                <h3 itemprop="name">Blogo</h3>
+                <p class="project-date"><time datetime="2023-03">March 2023</time></p>
+                <p itemprop="description">A simple Next.js website where users can create accounts, post, and read blogs that are saved to a database.</p>
+            </article>
+
+            <article class="project-item" itemscope itemtype="https://schema.org/WebApplication">
+                <h3 itemprop="name">One Piece Roulette</h3>
+                <p class="project-date"><time datetime="2022-10">October 2022</time></p>
+                <p itemprop="description">A fun Next.js website that builds a fictional character with different attributes determined by a spinning wheel.</p>
+            </article>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Publications Section -->
+    <section id="publications" aria-labelledby="publications-heading">
+        <h2 id="publications-heading">Publications</h2>
+        
+        <div class="publications-list">
+            <article class="publication-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
+                <h3 itemprop="headline">Gamification of examination: A new method and tool in the spirit of ”Who wants to be a millionaire?”</h3>
+                <p class="authors">
+                    <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">Nágó Dániel</span>
+                    </span>,
+                    <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">NÁGÓ Márk</span>
+                    </span>
+                    <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">KÁTAI Zoltán</span>
+                    </span>
+                    <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">PUSZTAI Kinga</span>
+                    </span>
+                    <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name">SZABÓ László</span>
+                    </span>
+                </p>
+                <p><a href="https://ojs.emt.ro/enelko-szamokt/en/article/view/2081" rel="noopener" target="_blank" itemprop="url">View Publication</a></p>
+            </article>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Interests Section -->
+    <section id="interests" aria-labelledby="interests-heading" class="interests-section">
+        <h2 id="interests-heading">Interests</h2>
+        <ul class="interests-list">
+            <li>Computer Science</li>
+            <li>Computer Networks</li>
+            <li>Graphics Programming</li>
+            <li>Electrical Engineering Projects</li>
+        </ul>
+    </section>
+</article>
+{{ end }}

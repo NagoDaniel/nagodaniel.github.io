@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section itemscope itemtype="https://schema.org/CollectionPage">
+    <header>
+        <h1 itemprop="name">{{ .Title }}</h1>
+        {{ with .Description }}<p itemprop="description">{{ . }}</p>{{ end }}
+    </header>
+    <hr>
+    <div itemprop="mainContentOfPage">
+        {{ .Content }}
+    </div>
+    {{ range .Pages }}
+    <article>
+        <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </article>
+    {{ end }}
+</section>
+{{ end }}
