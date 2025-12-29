@@ -19,6 +19,9 @@ copyright = "© 2025 Nágó Dániel"
 [outputs]
   home = ["HTML", "RSS"]
 
+# Disable unused taxonomies (removes /tags/ and /categories/)
+[taxonomies]
+
 [sitemap]
   changefreq = "weekly"
   priority = 0.5
