@@ -62,15 +62,15 @@
         <div class="education-list" itemprop="alumniOf" itemscope itemtype="https://schema.org/EducationalOrganization">
             <article class="education-item">
                 <h3 itemprop="name">Sapientia EMTE</h3>
-                <p class="degree">Informatics (BA/BSc/BProf)</p>
-                <p class="dates"><time datetime="2023-09">September 2023</time> – <span>Present</span></p>
+                <p class="degree">Computer Science (BA/BSc/BProf)</p>
+                <p class="dates"><time datetime="2023-09">September 2023</time> - <span>Present</span></p>
             </article>
         </div>
         <div class="education-list">
             <article class="education-item">
                 <h3>Bolyai Farkas Theoretical High School</h3>
                 <p class="degree">High School Diploma</p>
-                <p class="dates"><time datetime="2019-09">September 2019</time> – <time datetime="2023-06">June 2023</time></p>
+                <p class="dates"><time datetime="2019-09">September 2019</time> - <time datetime="2023-06">June 2023</time></p>
             </article>
         </div>
     </section>
@@ -81,17 +81,24 @@
     <section id="projects" aria-labelledby="projects-heading">
         <h2 id="projects-heading">Projects &amp; Experience</h2>
         
-        <div class="projects-list"> 
+        <div class="projects-list">
+            
+
             <article class="project-item" itemscope itemtype="https://schema.org/VideoGame">
                 <h3 itemprop="name">The Final Shift</h3>
                 <p class="project-date"><time datetime="2025">2025</time></p>
-                <p itemprop="description">A video game developed in Godot Engine, available on Steam.</p>
+                <p itemprop="description">A 3D horror game developed in the Godot Engine.</p>
                 <p><a href="https://store.steampowered.com/app/4043920/The_Final_Shift/" rel="noopener" target="_blank" itemprop="url">View on Steam (coming soon)</a></p>
             </article>
-
+            <article class="project-item" itemscope itemtype="https://schema.org/SoftwareApplication">
+                <h3 itemprop="name">Web 3D Renderer</h3>
+                <p class="project-date"><time datetime="2025">2025</time></p>
+                <p itemprop="description">A pure JavaScript 3D wireframe renderer. Features perspective projection, rotation, and OBJ file loading.</p>
+                <p><a href="{{ .Site.BaseURL }}projects/web_3D_renderer/" itemprop="url">Try it live →</a></p>
+            </article>
             <article class="project-item" itemscope itemtype="https://schema.org/SoftwareApplication">
                 <h3 itemprop="name">EduMillionaire - Gamified Examination Platform</h3>
-                <p class="project-date"><time datetime="2024">2024</time> – <time datetime="2025">2025</time></p>
+                <p class="project-date"><time datetime="2024">2024</time> - <time datetime="2025">2025</time></p>
                 <p itemprop="description">A MERN stack-based platform that gamifies examinations. The system enables real-time multiplayer examination, saving and visualising scores. Designed for university research to analyze the impact of gamification on student performance and stress levels.</p>
                 <p><a href="https://eduMillionaire.ms.sapientia.ro" rel="noopener" target="_blank" itemprop="url">eduMillionaire.ms.sapientia.ro</a></p>
             </article>
@@ -104,7 +111,7 @@
 
             <article class="project-item" itemscope itemtype="https://schema.org/WebSite">
                 <h3 itemprop="name">YouTube Channel</h3>
-                <p class="project-date"><time datetime="2023-04">April 2023</time> – Present</p>
+                <p class="project-date"><time datetime="2023-04">April 2023</time> - Present</p>
                 <p itemprop="description">I post videos about my interests, climbing, tutorials and more.</p>
                 <p><a href="https://youtube.com/{{ .Site.Params.youtube }}" rel="me noopener" target="_blank" itemprop="url">youtube.com/{{ .Site.Params.youtube }}</a></p>
             </article>
@@ -156,14 +163,14 @@
 
     <hr>
 
-    <!-- Interests Section -->
+    <!-- Interests Section --> <h2 id="interests-heading">Interests</h2>
     <section id="interests" aria-labelledby="interests-heading" class="interests-section">
-        <h2 id="interests-heading">Interests</h2>
+       
         <ul class="interests-list">
             <li>Computer Science</li>
             <li>Computer Networks</li>
             <li>Graphics Programming</li>
-            <li>Electrical Engineering Projects</li>
+            <li>Electronics</li>
         </ul>
     </section>
 </article>

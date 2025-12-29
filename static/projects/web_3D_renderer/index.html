@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    
+    <title>Web 3D Renderer - Nágó Dániel</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A pure JavaScript 3D wireframe renderer with OBJ file support.">
+    <meta name="author" content="Nágó Dániel">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nagodaniel.github.io/projects/web_3D_renderer/">
+    <meta property="og:title" content="Web 3D Renderer">
+    <meta property="og:description" content="A pure JavaScript 3D wireframe renderer with OBJ file support.">
+    <meta property="og:site_name" content="Nágó Dániel">
+    
+    <!-- Back link -->
+    <link rel="author" href="https://nagodaniel.github.io/">
+    
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #121212;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        
+        #controls {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: #07c123;
+            font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+            font-size: 0.875rem;
+            z-index: 100;
+            max-width: 280px;
+        }
+        
+        #controls h1 {
+            margin: 0 0 0.75rem;
+            font-size: 1.125rem;
+            color: #fff;
+        }
+        
+        .control-group {
+            margin-bottom: 0.75rem;
+        }
+        
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #07c123;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            font-size: 0.8rem;
+            color: #07c123;
+        }
+        
+        select {
+            width: 100%;
+            padding: 0.375rem 0.5rem;
+            background: #1a1a1a;
+            color: #07c123;
+            border: 1px solid #07c123;
+            border-radius: 0.25rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        select:hover,
+        select:focus {
+            background: #222;
+            outline: none;
+        }
+        
+        select option {
+            background: #1a1a1a;
+            color: #07c123;
+        }
+        
+        input[type="file"]::file-selector-button {
+            background: #07c123;
+            color: #121212;
+            border: none;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-family: inherit;
+            margin-right: 0.5rem;
+        }
+        
+        input[type="file"]::file-selector-button:hover {
+            background: #09e62b;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.375rem 0.75rem;
+            background: transparent;
+            border: 1px solid #07c123;
+            border-radius: 0.25rem;
+            color: #07c123;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: background-color 0.2s ease;
+        }
+        
+        .back-link:hover,
+        .back-link:focus {
+            background: #07c123;
+            color: #121212;
+        }
+        
+        #view_canvas {
+            display: block;
+        }
+        
+        /* Accessibility: focus visible */
+        :focus-visible {
+            outline: 2px solid #07c123;
+            outline-offset: 2px;
+        }
+        
+        /* Mobile toggle button - hidden on desktop */
+        .controls-toggle {
+            display: none;
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 480px) {
+            #controls {
+                top: 0.5rem;
+                left: 0.5rem;
+                right: 0.5rem;
+                max-width: none;
+                padding: 0;
+                font-size: 0.75rem;
+            }
+            
+            .controls_header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem;
+                cursor: pointer;
+            }
+            
+            .controls_header h1 {
+                margin: 0;
+                font-size: 1rem;
+            }
+            
+            .controls-toggle {
+                display: block;
+                background: transparent;
+                border: 1px solid #07c123;
+                border-radius: 0.25rem;
+                color: #07c123;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+                cursor: pointer;
+                font-family: inherit;
+            }
+            
+            .controls-toggle:hover,
+            .controls-toggle:focus {
+                background: #07c123;
+                color: #121212;
+            }
+            
+            .controls_body {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease, padding 0.3s ease;
+                padding: 0 0.75rem;
+            }
+            
+            .controls_body.open {
+                max-height: 300px;
+                padding: 0 0.75rem 0.75rem;
+            }
+            
+            .control-group {
+                margin-bottom: 0.5rem;
+            }
+            
+            label {
+                font-size: 0.75rem;
+            }
+            
+            input[type="range"] {
+                height: 1.5rem;
+            }
+            
+            input[type="file"] {
+                font-size: 0.7rem;
+            }
+            
+            input[type="file"]::file-selector-button {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.7rem;
+            }
+            
+            select {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.375rem;
+            }
+            
+            .back-link {
+                margin-top: 0.5rem;
+                margin-bottom: 0;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* Desktop: hide header wrapper, show controls directly */
+        @media (min-width: 481px) {
+            .controls_header {
+                display: block;
+            }
+            
+            .controls_header h1 {
+                margin: 0 0 0.75rem;
+                font-size: 1.125rem;
+                color: #fff;
+            }
+            
+            .controls_body {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside id="controls" role="region" aria-label="Renderer controls">
+        <div class="controls_header" onclick="toggleControls()">
+            
+            <button type="button" class="controls-toggle" id="toggle_btn" aria-expanded="false" aria-controls="controls_body">
+                ▼ Options
+            </button>
+        </div>
+        
+        <div class="controls_body" id="controls_body">
+            <div class="control-group">
+                <label for="fps_slider">FPS: <output id="fps_value">60</output></label>
+                <input type="range" id="fps_slider" min="1" max="120" value="60" aria-describedby="fps_value">
+            </div>
+            
+            <div class="control-group">
+                <label for="dz_slider">Camera Distance: <output id="dz_value">4</output></label>
+                <input type="range" id="dz_slider" min="1" max="200" value="4" aria-describedby="dz_value">
+            </div>
+            
+            <div class="control-group">
+                <label for="model_select">Select Model:</label>
+                <select id="model_select">
+                    <option value="objects/al.obj">Al</option>
+                    <option value="objects/teapot.obj">Teapot</option>
+                    <option value="objects/dodecahedron.obj">Dodecahedron</option>
+                    <option value="objects/slot_machine.obj">Slot Machine</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="obj_loader">Or upload custom OBJ:</label>
+                <input type="file" id="obj_loader" accept=".obj">
+            </div>
+            
+            <a href="/" class="back-link" aria-label="Back to portfolio">← Back to Portfolio</a>
+        </div>
+    </aside>
+    
+    <canvas id="view_canvas" aria-label="3D rendering viewport">
+        Your browser does not support the canvas element.
+    </canvas>
+    
+    <script>
+        function toggleControls() {
+            if (window.innerWidth <= 480) {
+                const controlsBody = document.getElementById('controls_body');
+                const toggleBtn = document.getElementById('toggle_btn');
+                const isOpen = controlsBody.classList.toggle('open');
+                toggleBtn.setAttribute('aria-expanded', isOpen);
+                toggleBtn.textContent = isOpen ? '▲ Close' : '▼ Options';
+            }
+        }
+    </script>
+    <script src="renderer.js"></script>
+</body>
+</html>
