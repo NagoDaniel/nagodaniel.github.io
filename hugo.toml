@@ -1,11 +1,13 @@
 baseURL = "https://nagodaniel.github.io/"
 languageCode = "en-US"
-title = "Nágó Dániel"
+title = "Nágó Dániel Portfolio - Nago Daniel"
 copyright = "© 2025 Nágó Dániel"
 
 [params]
-  description = "Personal website of Nágó Dániel - Computer Science student, developer, and creator."
+  description = "Personal portfolio of Nágó Dániel (Nago Daniel) - Computer Science student, software developer, and creator based in Romania."
   author = "Nágó Dániel"
+  authorAlt = "Nago Daniel"
+  keywords = "Nágó Dániel, Nago Daniel, Daniel Nago, software developer, portfolio, computer science, programmer"
   email = "nagodaniel2@gmail.com"
   github = "nagodaniel"
   youtube = "@NagoDaniel"

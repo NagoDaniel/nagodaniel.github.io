@@ -9,6 +9,7 @@
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta name="keywords" content="{{ .Site.Params.keywords }}">
     <meta name="author" content="{{ .Site.Params.author }}">
     <meta name="generator" content="Hugo {{ hugo.Version }}">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -55,16 +56,22 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "{{ .Site.Params.author }}",
+        "alternateName": ["{{ .Site.Params.authorAlt }}", "Daniel Nago"],
         "url": "{{ .Site.BaseURL }}",
         "image": "{{ .Site.BaseURL }}images/profile.jpg",
         "sameAs": [
             "https://github.com/{{ .Site.Params.github }}",
             "https://youtube.com/{{ .Site.Params.youtube }}"
         ],
-        "jobTitle": "Computer Science Student",
+        "jobTitle": "Software Developer",
         "worksFor": {
             "@type": "EducationalOrganization",
             "name": "Sapientia EMTE"
+        },
+        "knowsAbout": ["Computer Science", "Web Development", "Game Development", "React Native", "React", "JavaScript", "Mobile development"],
+        "nationality": {
+            "@type": "Country",
+            "name": "Romania"
         }
     }
     </script>
@@ -101,9 +108,10 @@
         <p class="h-card vcard">
             © <time datetime="{{ now.Format "2006" }}">{{ now.Format "2006" }}</time>
             <a class="p-name fn u-url url" href="{{ .Site.BaseURL }}" rel="author me" itemprop="author">{{ .Site.Params.author }}</a>
+            <span class="p-nickname" style="position:absolute;left:-9999px;">{{ .Site.Params.authorAlt }}</span>
         </p>
         <p>
-            <small>Built with <a href="https://gohugo.io/" rel="noopener">Hugo</a></small>
+            <small>Also known as {{ .Site.Params.authorAlt }} · Built with <a href="https://gohugo.io/" rel="noopener">Hugo</a></small>
         </p>
     </footer>
     
