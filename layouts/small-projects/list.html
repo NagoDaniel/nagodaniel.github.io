@@ -1,0 +1,52 @@
+{{ define "main" }}
+<section itemscope itemtype="https://schema.org/CollectionPage" aria-labelledby="small-projects-heading">
+    <header>
+        <h1 id="small-projects-heading" itemprop="name">{{ .Title }}</h1>
+        {{ with .Description }}<p itemprop="description">{{ . }}</p>{{ end }}
+    </header>
+    
+    <hr>
+    
+    <div class="small-projects-list" itemprop="mainContentOfPage">
+        {{ range .Pages.ByDate.Reverse }}
+        <article class="small-project-item" itemscope itemtype="https://schema.org/CreativeWork">
+            <div class="small-project-header">
+                <h2 itemprop="name">{{ .Title }}</h2>
+                <time class="small-project-date" datetime="{{ .Date.Format "2006-01" }}" itemprop="dateCreated">
+                    {{ .Date.Format "Jan 2006" }}
+                </time>
+            </div>
+            
+            {{ with .Params.description }}
+            <p itemprop="description">{{ . }}</p>
+            {{ end }}
+            
+            {{ with .Params.image }}
+            <figure class="small-project-media">
+                <img src="{{ . }}" alt="{{ $.Title }}" itemprop="image" loading="lazy">
+            </figure>
+            {{ end }}
+            
+            {{ with .Params.video }}
+            <div class="small-project-media small-project-video">
+                <iframe 
+                    src="{{ . }}" 
+                    title="{{ $.Title }} video"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+            {{ end }}
+            
+            {{ with .Params.externalLink }}
+            <p class="small-project-link">
+                <a href="{{ . }}" rel="noopener" itemprop="url">View Project →</a>
+            </p>
+            {{ end }}
+        </article>
+        {{ end }}
+    </div>
+</section>
+{{ end }}
