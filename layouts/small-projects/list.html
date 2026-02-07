@@ -21,10 +21,21 @@
             <p itemprop="description">{{ . }}</p>
             {{ end }}
             
-            {{ with .Params.image }}
-            <figure class="small-project-media">
-                <img src="{{ . }}" alt="{{ $.Title }}" itemprop="image" loading="lazy">
-            </figure>
+            {{ with .Params.images }}
+            <div class="small-project-gallery {{ $.Params.gallery_layout | default "vertical" }}">
+                {{ range . }}
+                <figure class="small-project-media {{ .size | default "medium" }}">
+                    <img src="{{ .src }}" alt="{{ .alt | default $.Title }}" itemprop="image" loading="lazy">
+                    {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+                </figure>
+                {{ end }}
+            </div>
+            {{ else }}
+                {{ with .Params.image }}
+                <figure class="small-project-media">
+                    <img src="{{ . }}" alt="{{ $.Title }}" itemprop="image" loading="lazy">
+                </figure>
+                {{ end }}
             {{ end }}
             
             {{ with .Params.video }}
@@ -33,8 +44,9 @@
                     src="{{ . }}" 
                     title="{{ $.Title }} video"
                     frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
+                    
                     loading="lazy">
                 </iframe>
             </div>
