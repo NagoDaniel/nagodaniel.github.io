@@ -143,6 +143,7 @@ camera.position.set(10, start_position.y + 5, 20);
 camera.lookAt(start_position.x, start_position.y, start_position.z);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
 
 /* ---------- Lights ---------- */

@@ -153,11 +153,13 @@
         #controls-panel {
           top: 0;
           right: 0;
-          height: 100vh;
+          bottom: 0;
+          height: auto;
           max-width: 85vw;
           border-radius: 0;
           transform: translateX(100%);
           overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
 
         #controls-panel.open {
