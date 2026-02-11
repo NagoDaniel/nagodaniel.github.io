@@ -53,7 +53,7 @@ const algorithmConfigs = {
     name: 'Random Step',
     func: randomStep,
     params: {
-      step_size: { value: 0.1, min: 0.01, max: 10, step: 0.01, label: 'Step Size' },
+      step_size: { value: 0.2, min: 0.01, max: 10, step: 0.01, label: 'Step Size' },
       update_interval: { value: 0.4, min: 0.01, max: 2, step: 0.05, label: 'Update Interval (s)' }
     }
   },
@@ -428,6 +428,11 @@ window.addEventListener('touchstart', handlePick, { passive: false });
 window.addEventListener('mousemove', handleMouseMove);
 window.addEventListener('touchmove', handleMouseMove, { passive: false });
 
+toggle_sim.addEventListener('click', () => {
+  is_sim_active = !is_sim_active;
+  toggle_sim.textContent = is_sim_active ? 'Pause Simulation' : 'Resume Simulation';
+});
+
 // Function to update shader based on cost function
 function getShaderElevationCode(functionKey) {
   switch(functionKey) {
@@ -499,8 +504,10 @@ function resetSimulation() {
   z = cost_function(x, y);
   
   ball.position.set(x, z, y);
+  const to_remove = ball.children.filter(child => child.type === 'Mesh') 
+  ball.remove(...to_remove);
   acc_time = 0;
-  
+  arrow.setLength(0);
   // Hide ghost ball if visible
   if (!isPlacementMode) {
     ghostBall.visible = false;
@@ -517,28 +524,41 @@ let acc_time = 0;
 const current_position_span = document.getElementById('current_position');
 const current_gradient_span = document.getElementById('current_gradient');
 const current_cost_span = document.getElementById('current_cost');
+let is_sim_active = true;
+let balls = true;
 function animate() {
   requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
   const delta = clock.getDelta();
+  if (!is_sim_active) return;
   acc_time += delta;
-  
   const updateInterval = config.params.update_interval?.value || 0.1;
   const stepSize = config.params.step_size?.value || 0.1;
-  
+  let t = delta / updateInterval;
+
   if (acc_time > updateInterval) {
     let pos, grad;
     const algorithmConfig = algorithmConfigs[config.algorithm];
     if (config.algorithm === 'random') {
-       pos = randomStep(cost_function, [x, y], stepSize);
-      // For random step, show direction of movement
-      const moveVec = new THREE.Vector3(pos[0] - x, 0, pos[1] - y);
-      const length = moveVec.length();
-      if (length > 0) {
-        arrow.setDirection(moveVec.clone().normalize());
-        arrow.setLength(length);
+      t = 1;
+      if(balls){
+        const directions = [[0,0],[0, 1], [1, 0], [-1, 0], [0, -1], [-1, 1], [1, -1], [-1, -1], [1, 1]];
+        pos = [x, y];
+        for (const [dx, dz] of directions) {
+          const c = cost_function(x + dx * stepSize, y + dz * stepSize);
+          const new_ball = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), new THREE.MeshStandardMaterial({ color: c < z ? 0x00ff00 : 0xfa0000 }));
+          new_ball.position.set(dx * stepSize, c - z, dz * stepSize);
+          ball.add(new_ball);
+          
+        }
+        balls = false;
+      } else{
+        pos = randomStep(cost_function, [x, y], stepSize);
+        const to_remove = ball.children.filter(child => child.type === 'Mesh') 
+        ball.remove(...to_remove);
+        balls = true;
       }
-      
-
     } else if (config.algorithm === 'adam' || config.algorithm === 'nadam') {
       [pos, grad] = algorithmConfig.func([x, y], cost_function, stepSize, RST, config.params.beta1.value, config.params.beta2.value);
       RST = false;
@@ -548,7 +568,7 @@ function animate() {
       const length = gradVec.length();
       if (length > 0) {
         arrow.setDirection(gradVec.clone().normalize());
-        arrow.setLength(length);
+        arrow.setLength(length * 1.2);
       }
 
     }
@@ -562,7 +582,7 @@ function animate() {
 
       if (length > 0) {
         arrow.setDirection(gradVec.clone().normalize());
-        arrow.setLength(length);
+        arrow.setLength(length * 1.2);
       }
     }
     
@@ -572,7 +592,9 @@ function animate() {
     
     acc_time = 0;
     current_position_span.textContent = `X: ${x.toFixed(2)}  Y: ${y.toFixed(2)}`;
-    if (grad){
+    if (grad != undefined){
+      if (grad[0] < 0.0001 && grad[0] > -0.0001) grad[0] = 0;
+      if (grad[1] < 0.0001 && grad[1] > -0.0001) grad[1] = 0;
       current_gradient_span.textContent = `X: ${grad[0].toFixed(2)}  Y: ${grad[1].toFixed(2)}`;
     }
     else{
@@ -581,14 +603,27 @@ function animate() {
     current_cost_span.textContent = z.toFixed(4);
   }
 
-  let t = delta / updateInterval;
+  
   
   ball.position.y = THREE.MathUtils.lerp(ball.position.y, z, t );
   ball.position.x = THREE.MathUtils.lerp(ball.position.x, x, t );
   ball.position.z = THREE.MathUtils.lerp(ball.position.z, y, t );
 
-  controls.update();
-  renderer.render(scene, camera);
+  
 }
+config.startX = parseFloat(document.getElementById('start-x').value);
+  config.startY = parseFloat(document.getElementById('start-y').value);
+  config.costFunction = document.getElementById('cost-function').value;
+  config.algorithm = document.getElementById('algorithm').value;
+  
+  // Update algorithm params
+  const algorithmConfig = algorithmConfigs[config.algorithm];
+  Object.keys(algorithmConfig.params).forEach(key => {
+    const input = document.getElementById(`param-${key}`);
+    if (input) {
+      config.params[key] = { ...algorithmConfig.params[key], value: parseFloat(input.value) };
+    }
+  });
+resetSimulation();
 
 animate();
