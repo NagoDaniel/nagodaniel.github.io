@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A_star</title>
+    <style>
+        body{
+            background-color: rgb(17, 17, 17);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 10px;
+        }
+        #grid_div{
+            display: grid;
+            grid-template-columns: repeat(10,1fr);
+            gap: 2px;
+            width: auto;
+            height: 90vh;
+            
+            
+        }
+        .cell{
+            aspect-ratio: 1/1;
+            background-color: whitesmoke;
+            width: 100%;
+            align-content: center;
+            text-align: center;
+        }
+        .wall{
+            background-color: gray;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id = "grid_div">
+
+    </div>
+    <div id = "controls">
+        <button id = "reset_btn">Reset</button>
+        <input type="number" id = "grid_x_input" name="grid_x_input" placeholder="width">
+        <input type="number" id = "grid_y_input" name="grid_y_input" placeholder="height">
+        <p style="color:aliceblue">Press Enter</p>
+    </div>
+    
+    <script src="main.js" defer></script>
+</body>
+
+</html>

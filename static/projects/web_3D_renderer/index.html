@@ -153,6 +153,11 @@
         .controls-toggle {
             display: none;
         }
+        .horizontal {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         
         /* Mobile styles */
         @media (max-width: 480px) {
@@ -284,7 +289,7 @@
                 <label for="model_select">Select Model:</label>
                 <select id="model_select">
                     <option value="objects/al.obj">Al</option>
-                    <option value="objects/teapot.obj">Teapot</option>
+                    <option value="objects/teapot.obj" selected>Teapot</option>
                     <option value="objects/dodecahedron.obj">Dodecahedron</option>
                     <option value="objects/slot_machine.obj">Slot Machine</option>
                 </select>
@@ -294,6 +299,28 @@
                 <label for="obj_loader">Or upload custom OBJ:</label>
                 <input type="file" id="obj_loader" accept=".obj">
             </div>
+            <div class="control-group">
+                <label for="color_mode">Color Mode:</label>
+                <select id="color_mode">
+                    <option value="random">Random</option>
+                    <option value="solid">Solid Color</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="render_mode">Render Mode:</label>
+                <select id="render_mode" aria-label="Select render mode">
+                    <option value="wireframe">Wireframe</option>
+                    <option value="solid" selected>Solid</option>
+                </select>
+            </div>
+            <div class = "control-group horizontal">
+                <label for="shading_checkbox">Shading:</label>
+                <input type="checkbox" checked id="shading_checkbox" aria-checked="false">
+            </div>
+            <div class="control-group horizontal">
+                <label for="culling_checkbox">Invert Culling:</label>
+                <input type ="checkbox" id="culling_checkbox" aria-checked="false">
+            </div>  
             
             <a href="/" class="back-link" aria-label="Back to portfolio">← Back to Portfolio</a>
         </div>

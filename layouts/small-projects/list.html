@@ -40,15 +40,21 @@
             
             {{ with .Params.video }}
             <div class="small-project-media small-project-video">
+                {{ if or (strings.HasSuffix . ".mp4") (strings.HasSuffix . ".webm") (strings.HasSuffix . ".ogg") }}
+                <video controls preload="metadata" playsinline>
+                    <source src="{{ . }}" type="video/{{ path.Ext . | strings.TrimPrefix "." }}">
+                    Your browser does not support the video tag.
+                </video>
+                {{ else }}
                 <iframe 
                     src="{{ . }}" 
                     title="{{ $.Title }} video"
                     frameborder="0" 
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen
-                    
                     loading="lazy">
                 </iframe>
+                {{ end }}
             </div>
             {{ end }}
             
