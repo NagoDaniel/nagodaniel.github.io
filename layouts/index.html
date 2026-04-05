@@ -116,11 +116,10 @@
                 <p><a href="https://youtube.com/{{ .Site.Params.youtube }}" rel="me noopener" target="_blank" itemprop="url">youtube.com/{{ .Site.Params.youtube }}</a></p>
             </article>
 
-            <article class="project-item" itemscope itemtype="https://schema.org/WebApplication">
-                <h3 itemprop="name">Blogo</h3>
-                <p class="project-date"><time datetime="2023-03">March 2023</time></p>
-                <p itemprop="description">A simple Next.js website where users can create accounts, post, and read blogs that are saved to a database.</p>
-            </article>
+            <div class="more-projects-callout">
+                <p>And you can find much more fun projects of mine at <a href="{{ .Site.BaseURL }}small-projects/">other projects</a>.</p>
+            </div>
+            
         </div>
     </section>
 

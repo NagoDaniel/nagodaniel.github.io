@@ -9,6 +9,7 @@
     
     <div class="small-projects-list" itemprop="mainContentOfPage">
         {{ range .Pages.ByDate.Reverse }}
+        {{ $project := . }}
         <article class="small-project-item" itemscope itemtype="https://schema.org/CreativeWork">
             <div class="small-project-header">
                 <h2 itemprop="name">{{ .Title }}</h2>
@@ -22,10 +23,10 @@
             {{ end }}
             
             {{ with .Params.images }}
-            <div class="small-project-gallery {{ $.Params.gallery_layout | default "vertical" }}">
+            <div class='small-project-gallery {{ $project.Params.gallery_layout | default "vertical" }}'>
                 {{ range . }}
                 <figure class="small-project-media {{ .size | default "medium" }}">
-                    <img src="{{ .src }}" alt="{{ .alt | default $.Title }}" itemprop="image" loading="lazy">
+                    <img src="{{ .src }}" alt="{{ .alt | default $project.Title }}" itemprop="image" loading="lazy">
                     {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
                 </figure>
                 {{ end }}
@@ -33,7 +34,7 @@
             {{ else }}
                 {{ with .Params.image }}
                 <figure class="small-project-media">
-                    <img src="{{ . }}" alt="{{ $.Title }}" itemprop="image" loading="lazy">
+                    <img src="{{ . }}" alt="{{ $project.Title }}" itemprop="image" loading="lazy">
                 </figure>
                 {{ end }}
             {{ end }}
@@ -48,7 +49,7 @@
                 {{ else }}
                 <iframe 
                     src="{{ . }}" 
-                    title="{{ $.Title }} video"
+                    title="{{ $project.Title }} video"
                     frameborder="0" 
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen

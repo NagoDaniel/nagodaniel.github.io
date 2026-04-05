@@ -6,6 +6,9 @@
     <title>A_star</title>
     <style>
         body{
+            margin: 0;
+            padding: 12px;
+            min-height: 100dvh;
             background-color: rgb(17, 17, 17);
                 display: flex;
                 align-items: center;
@@ -18,14 +21,15 @@
             grid-template-columns: repeat(10,1fr);
             gap: 2px;
             width: auto;
-            height: 90vh;
+            min-height: 90vh;
             
             
         }
         .cell{
             aspect-ratio: 1/1;
             background-color: whitesmoke;
-            width: 100%;
+            width: auto;
+            height: auto;
             align-content: center;
             text-align: center;
         }
